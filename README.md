@@ -1,43 +1,51 @@
-
-<div align="center"><p align="center">
-  <img
-    src="https://capsule-render.vercel.app/api?type=waving&color=1C1917&height=220&section=header&text=ARCHIVUM&fontSize=65&fontAlignY=40&desc=Autonomous%20Portfolio%20Catalogue%20%26%20Directory&descFontSize=16&descAlignY=62&fontColor=C5A880&stroke=8C704B&strokeWidth=1"
-    width="100%"
-    alt="ARCHIVUM Header"
-  />
-</p><a href="https://github.com/harshthakur750556/xeno-portfolio">
-  <img
-    src="https://readme-typing-svg.demolab.com?font=Cinzel&weight=600&size=18&duration=3000&pause=1000&color=8C704B&center=true&vCenter=true&width=650&height=45&lines=COLLECTION+MMXXVI+%E2%80%A2+OPUS+CURATUM;AUTONOMOUS+RECURSIVE+TREE+CATALOGUE;DYNAMIC+THREE.JS+3D+KINETIC+MONUMENT;DEPLOYED+SEAMLESSLY+ON+VERCEL+%26+GITHUB"
-    alt="ARCHIVUM Animated Subtitle"
-  />
-</a><br /><p align="center">  <a href="https://github.com/harshthakur750556/xeno-portfolio/stargazers">
+```markdown
+<div align="center">
+  <p align="center">
     <img
-      src="https://img.shields.io/github/stars/harshthakur750556/xeno-portfolio?style=for-the-badge&logo=github&logoColor=C5A880&label=STARS&color=1C1917&labelColor=292524"
-      alt="GitHub Stars"
+      src="https://capsule-render.vercel.app/api?type=waving&color=1C1917&height=220&section=header&text=ARCHIVUM&fontSize=65&fontAlignY=40&desc=Autonomous%20Portfolio%20Catalogue%20and%20Directory&descFontSize=16&descAlignY=62&fontColor=C5A880&stroke=8C704B&strokeWidth=1"
+      width="100%"
+      alt="ARCHIVUM Header"
     />
-  </a>  <a href="https://github.com/harshthakur750556/xeno-portfolio/network/members">
+  </p>
+  <a href="https://github.com/harshthakur750556/xeno-portfolio">
     <img
-      src="https://img.shields.io/github/forks/harshthakur750556/xeno-portfolio?style=for-the-badge&logo=git&logoColor=C5A880&label=FORKS&color=1C1917&labelColor=292524"
-      alt="GitHub Forks"
-    />
-  </a>  <a href="https://github.com/harshthakur750556/xeno-portfolio/blob/main/LICENSE">
-    <img
-      src="https://img.shields.io/badge/EDITION-MMXXVI-8C704B?style=for-the-badge&label=CURATED&labelColor=1C1917"
-      alt="Edition MMXXVI"
-    />
-  </a>  <a href="https://discord.com/users/1508113317451923536">
-    <img
-      src="https://img.shields.io/badge/DISCORD-1508113317451923536-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=1C1917"
-      alt="Discord"
-    />
-  </a></p><p align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fharshthakur750556%2Fxeno-portfolio">
-    <img
-      src="https://vercel.com/button"
-      alt="Deploy with Vercel"
+      src="https://readme-typing-svg.demolab.com?font=Cinzel&weight=600&size=18&duration=3000&pause=1000&color=8C704B&center=true&vCenter=true&width=650&height=45&lines=COLLECTION+MMXXVI+%E2%80%A2+OPUS+CURATUM;AUTONOMOUS+RECURSIVE+TREE+CATALOGUE;DYNAMIC+THREE.JS+3D+KINETIC+MONUMENT;DEPLOYED+SEAMLESSLY+ON+VERCEL+%26+GITHUB"
+      alt="ARCHIVUM Animated Subtitle"
     />
   </a>
-</p></div>
+  <br />
+  <p align="center">
+    <a href="https://github.com/harshthakur750556/xeno-portfolio/stargazers">
+      <img
+        src="https://img.shields.io/github/stars/harshthakur750556/xeno-portfolio?style=for-the-badge&logo=github&logoColor=C5A880&label=STARS&color=1C1917&labelColor=292524"
+        alt="GitHub Stars"
+      />
+    </a>
+    <a href="https://github.com/harshthakur750556/xeno-portfolio/network/members">
+      <img
+        src="https://img.shields.io/github/forks/harshthakur750556/xeno-portfolio?style=for-the-badge&logo=git&logoColor=C5A880&label=FORKS&color=1C1917&labelColor=292524"
+        alt="GitHub Forks"
+      />
+    </a>
+    <a href="https://github.com/harshthakur750556/xeno-portfolio/blob/main/LICENSE">
+      <img
+        src="https://img.shields.io/badge/EDITION-MMXXVI-8C704B?style=for-the-badge&label=CURATED&labelColor=1C1917"
+        alt="Edition MMXXVI"
+      />
+    </a>
+    <a href="https://discord.com/users/1508113317451923536">
+      <img
+        src="https://img.shields.io/badge/DISCORD-1508113317451923536-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=1C1917"
+        alt="Discord"
+      />
+    </a>
+  </p>
+  <p align="center">
+    <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fharshthakur750556%2Fxeno-portfolio">
+      <img src="https://vercel.com/button" alt="Deploy with Vercel" />
+    </a>
+  </p>
+</div>
 
 ---
 
@@ -45,33 +53,35 @@
 
 «ARCHIVUM is a standalone, museum-inspired portfolio repository catalogue engineered for automatic deployment on GitHub and Vercel.
 
-It transforms the repository into a living digital archive by discovering portfolio HTML documents stored inside the Portfolios/ directory, extracting their metadata, rendering live previews, and exposing each work through a unified catalogue interface.»
+It transforms the repository into a living digital archive by discovering portfolio HTML documents stored inside the `Portfolios/` directory, extracting their metadata, rendering live previews, and exposing each work through a unified catalogue interface.»
 
 ARCHIVUM eliminates the need for a manually maintained portfolio registry.
 
-Add a new HTML portfolio to Portfolios/, commit it to GitHub, and the catalogue can discover it automatically.
+Add a new HTML portfolio to `Portfolios/`, commit it to GitHub, and the catalogue can discover it automatically.
 
 ---
 
 ✦ Core Capabilities
 
-Capability Description
-⚡ Autonomous Sync Automatically discovers portfolio .html documents inside Portfolios/.
-🌳 Recursive Indexing Supports nested portfolio directories at arbitrary depth.
-🖼️ Live Thumbnails Renders actual portfolio pages through live iframe previews.
-🧭 Metadata Extraction Reads <title> and <meta name="description"> from each document.
-🏛️ Three.js Monument Interactive procedural celestial sculpture forms the visual centrepiece.
-📱 Responsive Preview Inspect portfolios using desktop, tablet, and mobile viewport modes.
-↗️ Direct Launch Open any portfolio directly in a full browser tab.
-⬇️ Direct Export Download standalone portfolio HTML documents.
-🚀 Vercel Ready Designed for seamless static deployment.
+| Capability | Description |
+| --- | --- |
+| ⚡ Autonomous Sync | Automatically discovers portfolio `.html` documents inside `Portfolios/`. |
+| 🌳 Recursive Indexing | Supports nested portfolio directories at arbitrary depth. |
+| 🖼️ Live Thumbnails | Renders actual portfolio pages through live iframe previews. |
+| 🧭 Metadata Extraction | Reads `<title>` and `<meta name="description">` from each document. |
+| 🏛️ Three.js Monument | Interactive procedural celestial sculpture forms the visual centrepiece. |
+| 📱 Responsive Preview | Inspect portfolios using desktop, tablet, and mobile viewport modes. |
+| ↗️ Direct Launch | Open any portfolio directly in a full browser tab. |
+| ⬇️ Direct Export | Download standalone portfolio HTML documents. |
+| 🚀 Vercel Ready | Designed for seamless static deployment. |
 
 ---
 
 🔭 Architectural Capabilities
 
 <details open>
-<summary><b>1. Recursive Portfolio Discovery</b></summary><br />ARCHIVUM treats `Portfolios/` as the canonical portfolio repository.
+<summary><b>1. Recursive Portfolio Discovery</b></summary><br />
+ARCHIVUM treats `Portfolios/` as the canonical portfolio repository.
 
 It recursively discovers HTML documents such as:
 
@@ -100,7 +110,8 @@ The main root catalogue, index.html, remains outside the portfolio collection an
 </details>
 
 <details open>
-<summary><b>2. Live Scaled Viewport Rendering</b></summary><br />Each catalogue card can render the actual portfolio document through a live iframe.
+<summary><b>2. Live Scaled Viewport Rendering</b></summary><br />
+Each catalogue card can render the actual portfolio document through a live iframe.
 
 This avoids the need for manually generated screenshots.
 
@@ -121,7 +132,8 @@ This means the preview can reflect the actual portfolio layout, typography, anim
 </details>
 
 <details open>
-<summary><b>3. Relative Asset Resolution</b></summary><br />Nested portfolios frequently reference resources using relative paths:
+<summary><b>3. Relative Asset Resolution</b></summary><br />
+Nested portfolios frequently reference resources using relative paths:
 
 ```text
 style.css
@@ -150,7 +162,8 @@ This allows relative CSS, JavaScript, image, font, and other asset references to
 </details>
 
 <details open>
-<summary><b>4. Metadata Intelligence</b></summary><br />Each portfolio can provide catalogue information directly through standard HTML metadata.
+<summary><b>4. Metadata Intelligence</b></summary><br />
+Each portfolio can provide catalogue information directly through standard HTML metadata.
 
 Document title:
 
@@ -179,7 +192,8 @@ No separate portfolio database is required.
 </details>
 
 <details open>
-<summary><b>5. Three.js Celestial Monument</b></summary><br />The ARCHIVUM interface incorporates a procedural 3D sculpture inspired by classical astronomical instruments.
+<summary><b>5. Three.js Celestial Monument</b></summary><br />
+The ARCHIVUM interface incorporates a procedural 3D sculpture inspired by classical astronomical instruments.
 
 Alabaster Core
 
@@ -208,7 +222,8 @@ The result is a digital monument rather than a conventional dashboard background
 </details>
 
 <details open>
-<summary><b>6. Multi-Device Portfolio Inspection</b></summary><br />Each portfolio can be inspected using multiple responsive viewport presets.
+<summary><b>6. Multi-Device Portfolio Inspection</b></summary><br />
+Each portfolio can be inspected using multiple responsive viewport presets.
 
 ```text
 DESKTOP
@@ -221,7 +236,8 @@ The purpose is to inspect the same portfolio from different display contexts wit
 </details>
 
 <details open>
-<summary><b>7. Launch & Export</b></summary><br />Each indexed portfolio can expose:
+<summary><b>7. Launch & Export</b></summary><br />
+Each indexed portfolio can expose:
 
 · Live preview
 · Full-screen inspection
@@ -759,3 +775,4 @@ COLLECTION MMXXVI • OPUS CURATUM
 A living catalogue of digital works.
 
 </div>
+```
