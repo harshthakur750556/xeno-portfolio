@@ -38,42 +38,44 @@
     />
   </a>
 </p></div>
-```markdown
+
 ---
+
 🏛️ Exemplaris Overview
 
 «ARCHIVUM is a standalone, museum-inspired portfolio repository catalogue engineered for automatic deployment on GitHub and Vercel.
 
-It transforms the repository into a living digital archive by discovering portfolio HTML documents stored inside the "Portfolios/" directory, extracting their metadata, rendering live previews, and exposing each work through a unified catalogue interface.»
+It transforms the repository into a living digital archive by discovering portfolio HTML documents stored inside the Portfolios/ directory, extracting their metadata, rendering live previews, and exposing each work through a unified catalogue interface.»
 
 ARCHIVUM eliminates the need for a manually maintained portfolio registry.
 
-Add a new HTML portfolio to "Portfolios/", commit it to GitHub, and the catalogue can discover it automatically.
+Add a new HTML portfolio to Portfolios/, commit it to GitHub, and the catalogue can discover it automatically.
 
 ---
 
 ✦ Core Capabilities
 
-Capability| Description
-⚡ Autonomous Sync| Automatically discovers portfolio ".html" documents inside "Portfolios/".
-🌳 Recursive Indexing| Supports nested portfolio directories at arbitrary depth.
-🖼️ Live Thumbnails| Renders actual portfolio pages through live iframe previews.
-🧭 Metadata Extraction| Reads "<title>" and "<meta name="description">" from each document.
-🏛️ Three.js Monument| Interactive procedural celestial sculpture forms the visual centrepiece.
-📱 Responsive Preview| Inspect portfolios using desktop, tablet, and mobile viewport modes.
-↗️ Direct Launch| Open any portfolio directly in a full browser tab.
-⬇️ Direct Export| Download standalone portfolio HTML documents.
-🚀 Vercel Ready| Designed for seamless static deployment.
+Capability Description
+⚡ Autonomous Sync Automatically discovers portfolio .html documents inside Portfolios/.
+🌳 Recursive Indexing Supports nested portfolio directories at arbitrary depth.
+🖼️ Live Thumbnails Renders actual portfolio pages through live iframe previews.
+🧭 Metadata Extraction Reads <title> and <meta name="description"> from each document.
+🏛️ Three.js Monument Interactive procedural celestial sculpture forms the visual centrepiece.
+📱 Responsive Preview Inspect portfolios using desktop, tablet, and mobile viewport modes.
+↗️ Direct Launch Open any portfolio directly in a full browser tab.
+⬇️ Direct Export Download standalone portfolio HTML documents.
+🚀 Vercel Ready Designed for seamless static deployment.
 
 ---
 
 🔭 Architectural Capabilities
 
 <details open>
-<summary><b>1. Recursive Portfolio Discovery</b></summary><br />ARCHIVUM treats "Portfolios/" as the canonical portfolio repository.
+<summary><b>1. Recursive Portfolio Discovery</b></summary><br />ARCHIVUM treats `Portfolios/` as the canonical portfolio repository.
 
 It recursively discovers HTML documents such as:
 
+```text
 Portfolios/
 ├── portfolio-one/
 │   └── index.html
@@ -84,74 +86,99 @@ Portfolios/
 └── portfolio-three/
     └── visual/
         └── index.html
+```
 
 The discovery system can identify:
 
-- Root HTML documents within "Portfolios/"
-- Nested HTML documents
-- Nested "index.html" files
-- Portfolio documents located multiple directory levels deep
+· Root HTML documents within Portfolios/
+· Nested HTML documents
+· Nested index.html files
+· Portfolio documents located multiple directory levels deep
 
-The main root catalogue, "index.html", remains outside the portfolio collection and is not treated as a portfolio entry.
+The main root catalogue, index.html, remains outside the portfolio collection and is not treated as a portfolio entry.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>2. Live Scaled Viewport Rendering</b></summary><br />Each catalogue card can render the actual portfolio document through a live iframe.
 
 This avoids the need for manually generated screenshots.
 
 Instead of:
 
+```text
 HTML → Screenshot → Static Image
+```
 
 ARCHIVUM uses:
 
+```text
 HTML → Live Document → Scaled iframe Preview
+```
 
 This means the preview can reflect the actual portfolio layout, typography, animation, images, and styling.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>3. Relative Asset Resolution</b></summary><br />Nested portfolios frequently reference resources using relative paths:
 
+```text
 style.css
 script.js
 assets/logo.svg
 images/hero.webp
 fonts/custom.woff2
+```
 
 For example:
 
+```html
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
 <img src="assets/logo.svg" alt="Logo">
+```
 
 When required, ARCHIVUM can establish the correct document base using:
 
+```html
 <base href="./portfolio-directory/">
+```
 
 This allows relative CSS, JavaScript, image, font, and other asset references to resolve against the correct portfolio location.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>4. Metadata Intelligence</b></summary><br />Each portfolio can provide catalogue information directly through standard HTML metadata.
 
-Document title
+Document title:
 
+```html
 <title>Example Portfolio</title>
+```
 
-Document description
+Document description:
 
+```html
 <meta
   name="description"
   content="A visual portfolio exploring computational architecture."
 >
+```
 
 ARCHIVUM can then transform the document into a catalogue entry such as:
 
+```text
 Example Portfolio
 A visual portfolio exploring computational architecture.
+```
 
 No separate portfolio database is required.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>5. Three.js Celestial Monument</b></summary><br />The ARCHIVUM interface incorporates a procedural 3D sculpture inspired by classical astronomical instruments.
 
 Alabaster Core
@@ -170,36 +197,43 @@ Interactive Mechanics
 
 Mouse and touch interaction provide:
 
-- Orbit control
-- Drag interaction
-- Inertial movement
-- Momentum decay
-- Cursor-responsive motion
+· Orbit control
+· Drag interaction
+· Inertial movement
+· Momentum decay
+· Cursor-responsive motion
 
 The result is a digital monument rather than a conventional dashboard background.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>6. Multi-Device Portfolio Inspection</b></summary><br />Each portfolio can be inspected using multiple responsive viewport presets.
 
+```text
 DESKTOP
 TABLET   → 768px
 MOBILE   → 380px
+```
 
 The purpose is to inspect the same portfolio from different display contexts without leaving ARCHIVUM.
 
-</details><details open>
+</details>
+
+<details open>
 <summary><b>7. Launch & Export</b></summary><br />Each indexed portfolio can expose:
 
-- Live preview
-- Full-screen inspection
-- Direct browser launch
-- Responsive viewport switching
-- Direct HTML download
-- Portfolio metadata
-- File information
+· Live preview
+· Full-screen inspection
+· Direct browser launch
+· Responsive viewport switching
+· Direct HTML download
+· Portfolio metadata
+· File information
 
 This allows ARCHIVUM to function simultaneously as:
 
+```text
 Portfolio Catalogue
         +
 Digital Archive
@@ -207,15 +241,17 @@ Digital Archive
 Preview System
         +
 Distribution Layer
+```
 
 </details>
-```
+
 ---
 
 🗂️ Repository Architecture
 
-The repository intentionally contains one portfolio directory: "Portfolios/".
+The repository intentionally contains one portfolio directory: Portfolios/.
 
+```text
 harshthakur750556/xeno-portfolio/
 │
 ├── index.html
@@ -239,9 +275,11 @@ harshthakur750556/xeno-portfolio/
 │
 ├── LICENSE
 └── README.md
+```
 
 Structural Principle
 
+```text
 Repository Root
       │
       ├── index.html
@@ -254,8 +292,9 @@ Repository Root
              ├── Portfolio B
              ├── Portfolio C
              └── ...
+```
 
-"Portfolios/" is therefore the single source of portfolio content.
+Portfolios/ is therefore the single source of portfolio content.
 
 ---
 
@@ -263,6 +302,7 @@ Repository Root
 
 A typical discovery sequence looks like this:
 
+```text
 Portfolios/
       │
       ▼
@@ -290,6 +330,7 @@ Expose Controls
       ├── Preview
       ├── Open
       └── Download
+```
 
 This architecture allows the repository to grow without requiring changes to a hard-coded portfolio list.
 
@@ -299,6 +340,7 @@ This architecture allows the repository to grow without requiring changes to a h
 
 Consider the following portfolio:
 
+```text
 Portfolios/
 └── museum/
     ├── index.html
@@ -307,17 +349,21 @@ Portfolios/
     └── assets/
         ├── hero.jpg
         └── logo.svg
+```
 
 Its document may reference:
 
+```html
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
 <img src="assets/hero.jpg" alt="Hero">
+```
 
-ARCHIVUM preserves the portfolio's directory context so that these relative resources continue to resolve correctly when displayed inside the catalogue.
+ARCHIVUM preserves the portfolio’s directory context so that these relative resources continue to resolve correctly when displayed inside the catalogue.
 
 The important architectural requirement is:
 
+```text
 Portfolio URL
       ↓
 Correct document directory
@@ -325,6 +371,7 @@ Correct document directory
 Correct relative resource resolution
       ↓
 Correct iframe rendering
+```
 
 ---
 
@@ -332,8 +379,9 @@ Correct iframe rendering
 
 For optimal ARCHIVUM integration, portfolios should expose a title and description.
 
-Recommended structure
+Recommended structure:
 
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -355,6 +403,7 @@ Recommended structure
 
 </body>
 </html>
+```
 
 The metadata can then be consumed by the catalogue automatically.
 
@@ -364,6 +413,7 @@ The metadata can then be consumed by the catalogue automatically.
 
 A minimal compatible portfolio could look like:
 
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -399,18 +449,23 @@ A minimal compatible portfolio could look like:
 </body>
 
 </html>
+```
 
 Place the project anywhere below:
 
+```text
 Portfolios/
+```
 
 For example:
 
+```text
 Portfolios/
 └── example/
     ├── index.html
     ├── style.css
     └── script.js
+```
 
 ---
 
@@ -418,16 +473,18 @@ Portfolios/
 
 1. Add a Portfolio
 
-Create a directory inside "Portfolios/".
+Create a directory inside Portfolios/.
 
 Example:
 
+```text
 Portfolios/
 └── my-new-project/
     ├── index.html
     ├── style.css
     ├── script.js
     └── assets/
+```
 
 Your portfolio can contain its own files and internal directory structure.
 
@@ -435,9 +492,11 @@ Your portfolio can contain its own files and internal directory structure.
 
 2. Commit the Portfolio
 
+```bash
 git add .
 git commit -m "Add new portfolio opus"
 git push origin main
+```
 
 ---
 
@@ -445,39 +504,23 @@ git push origin main
 
 Vercel can deploy the repository directly.
 
-Once the deployment reflects the latest commit, ARCHIVUM can discover the new portfolio from "Portfolios/".
+Once the deployment reflects the latest commit, ARCHIVUM can discover the new portfolio from Portfolios/.
 
 ---
 
 🛠️ Technology Stack
 
-<p align="left"><img
-src="https://img.shields.io/badge/Three.js-r128-1C1917?style=flat-square&logo=threedotjs&logoColor=C5A880"
-alt="Three.js"
-/>
+<p align="left">
+  <img src="https://img.shields.io/badge/Three.js-r128-1C1917?style=flat-square&logo=threedotjs&logoColor=C5A880" alt="Three.js" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-CDN-1C1917?style=flat-square&logo=tailwindcss&logoColor=C5A880" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Lucide-Icons-1C1917?style=flat-square&logo=lucide&logoColor=C5A880" alt="Lucide Icons" />
+  <img src="https://img.shields.io/badge/GitHub-REST_API-1C1917?style=flat-square&logo=github&logoColor=C5A880" alt="GitHub REST API" />
+  <img src="https://img.shields.io/badge/Vercel-Deployment-1C1917?style=flat-square&logo=vercel&logoColor=C5A880" alt="Vercel" />
+</p>
 
-<img
-src="https://img.shields.io/badge/Tailwind_CSS-CDN-1C1917?style=flat-square&logo=tailwindcss&logoColor=C5A880"
-alt="Tailwind CSS"
-/>
+Stack Overview:
 
-<img
-src="https://img.shields.io/badge/Lucide-Icons-1C1917?style=flat-square&logo=lucide&logoColor=C5A880"
-alt="Lucide Icons"
-/>
-
-<img
-src="https://img.shields.io/badge/GitHub-REST_API-1C1917?style=flat-square&logo=github&logoColor=C5A880"
-alt="GitHub REST API"
-/>
-
-<img
-src="https://img.shields.io/badge/Vercel-Deployment-1C1917?style=flat-square&logo=vercel&logoColor=C5A880"
-alt="Vercel"
-/>
-
-</p>Stack Overview
-
+```text
 Presentation
 ├── HTML
 ├── CSS
@@ -496,11 +539,13 @@ Repository Intelligence
 
 Deployment
 └── Vercel
+```
 
 ---
 
 🧭 System Architecture
 
+```text
                          GITHUB
                            │
                            ▼
@@ -544,6 +589,7 @@ Deployment
                   │     VERCEL      │
                   │   Production    │
                   └─────────────────┘
+```
 
 ---
 
@@ -551,6 +597,7 @@ Deployment
 
 ARCHIVUM is deliberately designed around the visual language of a classical archive.
 
+```text
 Dark Stone
      +
 Carrara Alabaster
@@ -564,6 +611,7 @@ Astronomical Geometry
 Modern WebGL
      =
 ARCHIVUM
+```
 
 The objective is to make the interface feel less like a generic developer dashboard and more like a digital museum catalogue.
 
@@ -571,16 +619,16 @@ The objective is to make the interface feel less like a generic developer dashbo
 
 🎨 Design System
 
-Element| Value
-Primary Background| "#1C1917"
-Secondary Background| "#292524"
-Alabaster| "#FAF8F5"
-Imperial Gold| "#C5A880"
-Bronze| "#8C704B"
-Stone Text| "#57534E"
-Display Typeface| Cinzel
-Body Typeface| System / Sans
-Renderer| Three.js
+Element Value
+Primary Background #1C1917
+Secondary Background #292524
+Alabaster #FAF8F5
+Imperial Gold #C5A880
+Bronze #8C704B
+Stone Text #57534E
+Display Typeface Cinzel
+Body Typeface System / Sans
+Renderer Three.js
 
 ---
 
@@ -588,16 +636,18 @@ Renderer| Three.js
 
 ARCHIVUM is designed to work best when every portfolio follows a simple contract:
 
+```text
 Portfolios/
 └── <portfolio-name>/
     ├── index.html
     ├── CSS / JavaScript
     ├── images / fonts / assets
     └── optional nested resources
+```
 
 The portfolio itself remains independent.
 
-ARCHIVUM does not need to rewrite the portfolio's application architecture.
+ARCHIVUM does not need to rewrite the portfolio’s application architecture.
 
 It simply discovers, reads, previews, and launches it.
 
@@ -609,26 +659,31 @@ When HTML syntax needs to be displayed literally inside this README, it should a
 
 Correct:
 
+```html
 <base href="./portfolio/">
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
+```
 
 Correct:
 
+```html
 <title>
 <meta>
 <link>
 <base>
 <script>
+```
 
 Avoid placing raw HTML syntax directly inside ordinary Markdown paragraphs unless the HTML is intentionally meant to be rendered.
 
-This prevents GitHub's Markdown renderer from interpreting the examples as actual page elements.
+This prevents GitHub’s Markdown renderer from interpreting the examples as actual page elements.
 
 ---
 
 📦 Deployment Model
 
+```text
 Local Development
        │
        ▼
@@ -651,25 +706,19 @@ Recursive Portfolio Discovery
        │
        ▼
 Live Catalogue
+```
 
 ---
 
 ✅ Adding a New Portfolio
 
 1. Create directory
-   ↓
 2. Place portfolio inside Portfolios/
-   ↓
 3. Add index.html or another HTML entry point
-   ↓
 4. Include normal relative assets
-   ↓
 5. Commit to Git
-   ↓
 6. Push to GitHub
-   ↓
 7. Deploy through Vercel
-   ↓
 8. ARCHIVUM discovers the portfolio
 
 No manual catalogue entry should be necessary.
@@ -683,11 +732,11 @@ No manual catalogue entry should be necessary.
 Lead Architect & Repository Curator
 
 <br /><a href="https://github.com/harshthakur750556">
-  <img
-    src="https://img.shields.io/badge/GitHub-harshthakur750556-1C1917?style=for-the-badge&logo=github&logoColor=C5A880&labelColor=292524"
-    alt="GitHub Profile"
-  />
-</a> 
+<img
+src="https://img.shields.io/badge/GitHub-harshthakur750556-1C1917?style=for-the-badge&logo=github&logoColor=C5A880&labelColor=292524"
+alt="GitHub Profile"
+/>
+</a>
 
 <a href="https://discord.com/users/1508113317451923536">
   <img
@@ -699,7 +748,9 @@ Lead Architect & Repository Curator
 
 <br /><sub>ANNO MMXXVI • OPUS CURATUM • ALL RIGHTS RESERVED</sub>
 
-</div>---
+</div>
+
+---
 
 <div align="center">ARCHIVUM
 
@@ -708,4 +759,3 @@ COLLECTION MMXXVI • OPUS CURATUM
 A living catalogue of digital works.
 
 </div>
-```
