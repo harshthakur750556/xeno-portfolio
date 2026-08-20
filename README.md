@@ -1,4 +1,4 @@
-```markdown
+
 <div align="center">
   <p align="center">
     <img
@@ -775,4 +775,3 @@ COLLECTION MMXXVI • OPUS CURATUM
 A living catalogue of digital works.
 
 </div>
-```
