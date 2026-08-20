@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ARCHIVUM — Portfolio Repository Catalogue</title>
+    <meta name="description" content="Autonomous catalogue and showcase portal for standalone portfolio archives.">
+
+    <!-- Classical Roman & Romanian Diacritic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        alabaster: '#FAF8F5',
+                        marble: '#F3EFEA',
+                        stone: {
+                            50: '#FBFBF9',
+                            100: '#F5F5F0',
+                            200: '#E8E6DF',
+                            300: '#D6D3C9',
+                            400: '#A8A29E',
+                            500: '#78716C',
+                            600: '#57534E',
+                            800: '#292524',
+                            900: '#1C1917',
+                        },
+                        imperial: {
+                            gold: '#8C704B',
+                            lightgold: '#C5A880',
+                            darkgold: '#6A5334',
+                            sand: '#EADBCC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        ::selection {
+            background-color: #EADBCC;
+            color: #1C1917;
+        }
+
+        .hairline-border {
+            border: 1px solid rgba(140, 112, 75, 0.18);
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 30px -10px rgba(41, 37, 36, 0.04),
+                        0 20px 40px -15px rgba(140, 112, 75, 0.03);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card-shadow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 35px -10px rgba(41, 37, 36, 0.08),
+                        0 24px 50px -15px rgba(140, 112, 75, 0.06);
+        }
+
+        .alabaster-glass {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(232, 230, 223, 0.9);
+        }
+
+        /* Prevent touch scroll conflicts when dragging the 3D object on mobile */
+        #threejs-container canvas {
+            touch-action: none;
+            outline: none;
+        }
+
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D6D3C9;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A8A29E;
+        }
+    </style>
+</head>
+
+<body class="bg-alabaster text-stone-900 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-imperial-sand overflow-x-hidden">
+
+    <!-- Top Classical Ribbon -->
+    <aside aria-label="Announcement" class="w-full bg-stone-900 text-stone-300 text-[11px] py-2 px-4 sm:px-6 font-cinzel tracking-widest text-center flex justify-between items-center border-b border-stone-800 shrink-0">
+        <span class="hidden md:inline-block">COLLECTION MMXXVI • OPUS CURATUM</span>
+        <span class="mx-auto md:mx-0">AUTONOMOUS PORTFOLIO REPOSITORY CATALOGUE</span>
+        <div class="hidden md:flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-imperial-lightgold animate-pulse"></span>
+            <span id="repoStatusIndicator">AUTO-SCAN ACTIVE</span>
+        </div>
+    </aside>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 alabaster-glass transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+            <!-- Brand / Crest -->
+            <div class="flex items-center gap-3.5">
+                <div class="w-9 h-9 border border-imperial-gold/40 flex items-center justify-center rotate-45 bg-white shadow-xs">
+                    <span class="font-cinzel text-imperial-gold font-bold text-base -rotate-45">Æ</span>
+                </div>
+                <div>
+                    <a href="#" class="font-cinzel text-lg sm:text-xl font-bold tracking-widest text-stone-900 block leading-none">ARCHIVUM</a>
+                    <span class="font-serif italic text-xs text-stone-500 block mt-1">Catalogus Portfolii</span>
+                </div>
+            </div>
+
+            <!-- Repo Source & Sync Controls -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="openRepoConfigModal()" class="px-3.5 py-2 text-xs font-cinzel tracking-wider text-stone-800 bg-white hover:bg-stone-100 border border-stone-300/80 transition-all flex items-center gap-2 shadow-2xs">
+                    <i data-lucide="git-fork" class="w-3.5 h-3.5 text-imperial-gold"></i>
+                    <span id="navRepoLabel" class="max-w-[140px] sm:max-w-[200px] truncate text-left">SYNC REPO</span>
+                </button>
+
+                <button onclick="document.getElementById('manualFileInput').click()" class="px-3.5 py-2 text-xs font-cinzel tracking-wider text-white bg-stone-900 hover:bg-stone-800 transition-all flex items-center gap-2">
+                    <i data-lucide="plus" class="w-3.5 h-3.5 text-imperial-lightgold"></i>
+                    <span class="hidden sm:inline">ADD FILE</span>
+                </button>
+                <input type="file" id="manualFileInput" accept=".html,.htm" multiple class="hidden" onchange="handleManualFileUpload(event)">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-12 flex-1 w-full">
+
+        <!-- Hero Section: Editorial Typography & Auto-Adjusting Interactive 3D Monument -->
+        <section class="relative bg-white border border-stone-200/90 p-6 sm:p-10 md:p-12 overflow-hidden shadow-xs">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+                
+                <!-- Left Editorial Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 border border-stone-200 text-[10px] sm:text-[11px] font-cinzel tracking-widest text-imperial-gold">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                        <span>VERCEL &amp; GITHUB REPO AUTONOMOUS DEPLOYMENT</span>
+                    </div>
+
+                    <h1 class="font-cinzel text-2xl sm:text-4xl md:text-5xl font-normal tracking-tight text-stone-900 leading-tight">
+                        Index &amp; <span class="font-serif italic text-imperial-gold font-normal">Catalog</span> de Portofolii
+                    </h1>
+
+                    <p class="font-serif text-base sm:text-lg text-stone-600 leading-relaxed max-w-xl">
+                        Autonomous directory for all HTML portfolio files residing in this repository. Inspect files inside real-time responsive sandboxes or download standalone source documents.
+                    </p>
+
+                    <!-- Real-Time Stats -->
+                    <div class="pt-4 border-t border-stone-100 grid grid-cols-3 gap-4 sm:gap-6">
+                        <div>
+                            <div class="font-cinzel text-xl sm:text-2xl font-bold text-stone-900" id="statTotalFiles">0</div>
+                            <div class="font-cinzel text-[9px] sm:text-[10px] text-stone-500 tracking-wider">FILES DETECTED</div>
+                        </div>
+                        <div>
+                            <div class="font-cinzel text-xl sm:text-2xl font-bold text-imperial-gold truncate" id="statRepoOwner">DISCOVERING</div>
+                            <div class="font-cinzel text-[9px] sm:text-[10px] text-stone-500 tracking-wider">ACTIVE ORIGIN</div>
+                        </div>
+                        <div>
+                            <div class="font-cinzel text-xl sm:text-2xl font-bold text-stone-900" id="statScanStatus">STANDBY</div>
+                            <div class="font-cinzel text-[9px] sm:text-[10px] text-stone-500 tracking-wider">INDEX STATE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right 3D Canvas Viewport (Auto-scaling with Mouse/Touch Orbit Controls) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center w-full">
+                    <div id="threejs-container" class="w-full h-64 sm:h-80 md:h-96 relative cursor-grab active:cursor-grabbing select-none rounded-sm bg-gradient-to-b from-stone-50 to-stone-100/50 border border-stone-200/50">
+                        <!-- Three.js Canvas Injected Here -->
+                        <div id="threeLoading" class="absolute inset-0 flex items-center justify-center text-xs font-cinzel text-stone-400">
+                            INITIALIZING 3D ENGINE...
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-cinzel tracking-widest text-stone-400 mt-2.5 flex items-center gap-1.5 text-center">
+                        <i data-lucide="move-3d" class="w-3 h-3 text-imperial-gold"></i>
+                        DRAG TO ORBIT &bull; PINCH/WHEEL TO ZOOM
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Repository Search & Filter Bar -->
+        <section class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-300/80">
+                <div>
+                    <h2 class="font-cinzel text-xl sm:text-2xl text-stone-900 tracking-wide">REPOSITORIUM PORTFOLII</h2>
+                    <p class="font-serif italic text-xs sm:text-sm text-stone-500">Live directory of verified standalone HTML pages</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <!-- Search Input -->
+                    <div class="relative flex-1 sm:w-64">
+                        <i data-lucide="search" class="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="searchInput" oninput="filterPortfolios()" placeholder="Search by file or title..." class="w-full pl-9 pr-3 py-2 bg-white border border-stone-300 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:border-stone-800 transition-colors">
+                    </div>
+
+                    <!-- Category Filter -->
+                    <select id="categoryFilter" onchange="filterPortfolios()" class="py-2 px-3 bg-white border border-stone-300 text-xs font-cinzel tracking-wider text-stone-800 focus:outline-none focus:border-stone-800">
+                        <option value="all">ALL FILES</option>
+                        <option value="Architectural">ARCHITECTURAL</option>
+                        <option value="Editorial">EDITORIAL</option>
+                        <option value="Interactive">INTERACTIVE / 3D</option>
+                        <option value="Standard">STANDARD PORTFOLIO</option>
+                    </select>
+
+                    <!-- Manual Re-Scan Button -->
+                    <button onclick="rescanRepository()" title="Re-scan Repository" class="p-2 bg-white border border-stone-300 hover:bg-stone-100 text-stone-700 transition-colors">
+                        <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Portfolio Grid -->
+            <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Honest Empty State / Zero Pseudo-Files Notice -->
+            <div id="emptyState" class="hidden text-center py-16 px-4 bg-white border border-stone-200">
+                <div class="w-12 h-12 mx-auto bg-stone-100 rounded-full flex items-center justify-center text-stone-400 mb-3">
+                    <i data-lucide="file-search" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-cinzel text-base sm:text-lg text-stone-900 font-semibold tracking-wider" id="emptyStateTitle">NO HTML FILES DETECTED IN REPO</h3>
+                <p class="font-serif italic text-stone-500 text-sm max-w-md mx-auto mt-2" id="emptyStateDesc">
+                    No other standalone `.html` files were discovered in this directory. Add portfolio HTML files to your repository or configure your GitHub repository below.
+                </p>
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="openRepoConfigModal()" class="px-4 py-2 bg-stone-900 text-white font-cinzel text-xs tracking-wider hover:bg-stone-800 transition-colors">CONNECT GITHUB REPO</button>
+                    <button onclick="document.getElementById('manualFileInput').click()" class="px-4 py-2 bg-white border border-stone-300 text-stone-800 font-cinzel text-xs tracking-wider hover:bg-stone-100 transition-colors">UPLOAD LOCAL FILE</button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner State -->
+            <div id="scanLoadingState" class="hidden text-center py-20 bg-white border border-stone-200">
+                <div class="inline-block w-8 h-8 border-2 border-imperial-gold border-t-transparent rounded-full animate-spin mb-3"></div>
+                <h3 class="font-cinzel text-sm tracking-widest text-stone-800">SCANNING REPOSITORY TREE...</h3>
+                <p class="font-serif italic text-xs text-stone-500 mt-1">Querying file trees and parsing HTML metadata</p>
+            </div>
+        </section>
+
+        <!-- Dropzone / Drag-and-Drop Local HTML Inspector -->
+        <section class="border-2 border-dashed border-stone-300 hover:border-imperial-gold transition-colors p-8 bg-white/50 text-center" id="dropZone">
+            <div class="max-w-md mx-auto space-y-2 pointer-events-none">
+                <div class="w-10 h-10 mx-auto bg-stone-100 rounded-full flex items-center justify-center text-imperial-gold">
+                    <i data-lucide="folder-open" class="w-5 h-5"></i>
+                </div>
+                <h4 class="font-cinzel text-xs sm:text-sm font-semibold tracking-wider text-stone-900">DRAG &amp; DROP LOCAL HTML PORTFOLIOS</h4>
+                <p class="font-serif italic text-xs text-stone-500">Drop your `.html` portfolio files here to inspect, preview, and test them instantly in-browser.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Classical Footer -->
+    <footer class="border-t border-stone-200 bg-white py-10 shrink-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <span class="font-cinzel text-xs sm:text-sm font-bold tracking-widest text-stone-900 block">ARCHIVUM PORTFOLII</span>
+                <span class="font-serif text-xs italic text-stone-500">Standalone Catalog Architecture for Vercel &amp; GitHub Deployments.</span>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-cinzel tracking-wider text-stone-600">
+                <button onclick="openRepoConfigModal()" class="hover:text-stone-900">CONFIG REPOSITORY</button>
+                <span>&bull;</span>
+                <a href="#top" class="hover:text-stone-900">TOP OF CATALOGUE</a>
+            </div>
+            <div class="text-[11px] font-mono text-stone-400">
+                ANNO MMXXVI
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- 1. FULLSCREEN / RESPONSIVE DEVICE LIGHTBOX PREVIEW -->
+    <div id="previewModal" class="fixed inset-0 z-50 bg-stone-950/85 backdrop-blur-md hidden flex flex-col">
+        <!-- Top Toolbar -->
+        <div class="h-16 bg-white border-b border-stone-200 px-4 sm:px-6 flex items-center justify-between shrink-0 gap-3">
+            <div class="flex items-center gap-3 overflow-hidden">
+                <span class="font-cinzel text-xs font-bold text-stone-900 tracking-wider truncate" id="previewModalTitle">PREVIEW</span>
+                <span class="text-stone-300 hidden sm:inline">|</span>
+                <span class="text-[11px] font-mono text-stone-500 hidden sm:inline truncate" id="previewModalPath">file.html</span>
+            </div>
+
+            <!-- Device Dimension Selectors -->
+            <div class="hidden sm:flex items-center bg-stone-100 p-1 border border-stone-200">
+                <button onclick="setPreviewDevice('desktop')" id="devBtnDesktop" class="px-3 py-1 text-xs font-cinzel tracking-wider text-stone-900 bg-white shadow-xs">DESKTOP</button>
+                <button onclick="setPreviewDevice('tablet')" id="devBtnTablet" class="px-3 py-1 text-xs font-cinzel tracking-wider text-stone-500 hover:text-stone-900">TABLET</button>
+                <button onclick="setPreviewDevice('mobile')" id="devBtnMobile" class="px-3 py-1 text-xs font-cinzel tracking-wider text-stone-500 hover:text-stone-900">MOBILE</button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2 shrink-0">
+                <a id="previewExternalLink" href="#" target="_blank" class="p-2 text-stone-700 hover:bg-stone-100 border border-stone-200" title="Open directly in new tab">
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+                <button id="previewDownloadBtn" class="px-3 py-1.5 text-xs font-cinzel tracking-wider bg-stone-900 text-white hover:bg-stone-800 flex items-center gap-1.5">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-imperial-lightgold"></i>
+                    <span class="hidden md:inline">DOWNLOAD</span>
+                </button>
+                <button onclick="closePreviewModal()" class="p-2 text-stone-700 hover:bg-stone-100 border border-stone-200">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Frame Container -->
+        <div class="flex-1 bg-stone-900/40 p-2 sm:p-6 flex items-center justify-center overflow-hidden">
+            <div id="previewFrameWrapper" class="w-full h-full bg-white shadow-2xl transition-all duration-300 flex flex-col">
+                <iframe id="previewIframe" src="about:blank" class="w-full h-full border-0 flex-1"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GITHUB REPOSITORY CONFIG MODAL -->
+    <div id="repoModal" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white max-w-lg w-full p-6 sm:p-8 border border-stone-300 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+                <div>
+                    <h3 class="font-cinzel text-lg font-bold text-stone-900">REPOSITORY CONNECTION</h3>
+                    <p class="font-serif italic text-xs text-stone-500">Auto-detect files from your GitHub or Vercel repository</p>
+                </div>
+                <button onclick="closeRepoConfigModal()" class="text-stone-400 hover:text-stone-800">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-cinzel tracking-wider text-stone-700 mb-1.5">GITHUB OWNER / REPOSITORY</label>
+                    <input type="text" id="cfgRepoInput" placeholder="e.g. your-username/your-portfolio-repo" class="w-full p-2.5 bg-stone-50 border border-stone-300 focus:outline-none focus:border-stone-900 font-mono text-xs">
+                    <span class="text-[11px] text-stone-500 font-serif italic mt-1 block">Leave blank to scan relative directory on current domain.</span>
+                </div>
+
+                <div>
+                    <label class="block font-cinzel tracking-wider text-stone-700 mb-1.5">TARGET BRANCH</label>
+                    <input type="text" id="cfgBranchInput" placeholder="main" value="main" class="w-full p-2.5 bg-stone-50 border border-stone-300 focus:outline-none focus:border-stone-900 font-mono text-xs">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-stone-200">
+                <button onclick="closeRepoConfigModal()" class="px-4 py-2 font-cinzel text-xs text-stone-600 hover:text-stone-900">CANCEL</button>
+                <button onclick="saveAndSyncRepo()" class="px-5 py-2 font-cinzel text-xs bg-stone-900 text-white hover:bg-stone-800">SYNC FILES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white text-xs font-cinzel tracking-wider px-5 py-3 border-l-2 border-imperial-lightgold shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <i data-lucide="info" class="w-4 h-4 text-imperial-lightgold"></i>
+        <span id="toastMsg">Notification</span>
+    </div>
+
+    <!-- ================= JAVASCRIPT ENGINE ================= -->
+    <script>
+        // Real Discovered Portfolio Files (Empty by default: NO pseudo-files)
+        let discoveredPortfolios = [];
+
+        // ==========================================
+        // 1. THREE.JS FULLY INTERACTIVE & RESPONSIVE 3D SCULPTURE
+        // ==========================================
+        let scene, camera, renderer, sculptureGroup, centralMesh, goldRings, dustParticles;
+        let isPointerDown = false;
+        let prevPointerPos = { x: 0, y: 0 };
+        let rotationVelocity = { x: 0.002, y: 0.004 };
+        let targetTilt = { x: 0, y: 0 };
+
+        function initThreeEngine() {
+            const container = document.getElementById('threejs-container');
+            const loadingMsg = document.getElementById('threeLoading');
+            if (!container) return;
+
+            const width = container.clientWidth || 300;
+            const height = container.clientHeight || 300;
+
+            // Scene & Camera
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+            camera.position.set(0, 0, 6.5);
+
+            // Renderer Setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.1;
+            container.appendChild(renderer.domElement);
+
+            if (loadingMsg) loadingMsg.remove();
+
+            // Lighting (Classical Soft Studio)
+            const ambient = new THREE.AmbientLight(0xfffefb, 1.6);
+            scene.add(ambient);
+
+            const keyLight = new THREE.DirectionalLight(0xffecd2, 1.8);
+            keyLight.position.set(6, 8, 6);
+            scene.add(keyLight);
+
+            const rimLight = new THREE.DirectionalLight(0xcde6ff, 1.2);
+            rimLight.position.set(-6, -4, -4);
+            scene.add(rimLight);
+
+            // Group Parent
+            sculptureGroup = new THREE.Group();
+            scene.add(sculptureGroup);
+
+            // 1. Alabaster Faceted Polyhedron Core
+            const coreGeo = new THREE.IcosahedronGeometry(1.5, 1);
+            const alabasterMat = new THREE.MeshPhysicalMaterial({
+                color: 0xFAF8F5,
+                roughness: 0.25,
+                metalness: 0.05,
+                clearcoat: 0.8,
+                clearcoatRoughness: 0.2,
+                flatShading: true
+            });
+            centralMesh = new THREE.Mesh(coreGeo, alabasterMat);
+            sculptureGroup.add(centralMesh);
+
+            // 2. Imperial Gold Orbital Rings
+            goldRings = new THREE.Group();
+            const ringMat = new THREE.MeshStandardMaterial({
+                color: 0xC5A880,
+                metalness: 0.85,
+                roughness: 0.3,
+                wireframe: true
+            });
+
+            const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.03, 16, 64), ringMat);
+            const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.35, 0.025, 16, 64), ringMat);
+            ring2.rotation.x = Math.PI / 2.8;
+
+            goldRings.add(ring1);
+            goldRings.add(ring2);
+            sculptureGroup.add(goldRings);
+
+            // 3. Ambient Dust Motes
+            const pCount = 50;
+            const pGeo = new THREE.BufferGeometry();
+            const pPos = new Float32Array(pCount * 3);
+            for (let i = 0; i < pCount * 3; i += 3) {
+                pPos[i] = (Math.random() - 0.5) * 7;
+                pPos[i + 1] = (Math.random() - 0.5) * 7;
+                pPos[i + 2] = (Math.random() - 0.5) * 5;
+            }
+            pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+            const pMat = new THREE.PointsMaterial({ size: 0.035, color: 0x8C704B, transparent: true, opacity: 0.65 });
+            dustParticles = new THREE.Points(pGeo, pMat);
+            scene.add(dustParticles);
+
+            // ==========================================
+            // FULL INTERACTIVITY & TOUCH / MOUSE CONTROLS
+            // ==========================================
+            const getPointerCoord = (e) => {
+                if (e.touches && e.touches.length > 0) {
+                    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+                return { x: e.clientX, y: e.clientY };
+            };
+
+            const onPointerStart = (e) => {
+                isPointerDown = true;
+                const pos = getPointerCoord(e);
+                prevPointerPos = { x: pos.x, y: pos.y };
+            };
+
+            const onPointerMove = (e) => {
+                const pos = getPointerCoord(e);
+                if (isPointerDown) {
+                    const deltaX = pos.x - prevPointerPos.x;
+                    const deltaY = pos.y - prevPointerPos.y;
+
+                    rotationVelocity.y = deltaX * 0.007;
+                    rotationVelocity.x = deltaY * 0.007;
+
+                    prevPointerPos = { x: pos.x, y: pos.y };
+                } else {
+                    // Parallax tilt when hovering over canvas
+                    const rect = container.getBoundingClientRect();
+                    const normX = ((pos.x - rect.left) / rect.width) * 2 - 1;
+                    const normY = -(((pos.y - rect.top) / rect.height) * 2 - 1);
+                    targetTilt.x = normY * 0.3;
+                    targetTilt.y = normX * 0.4;
+                }
+            };
+
+            const onPointerEnd = () => {
+                isPointerDown = false;
+            };
+
+            // Event Listeners for Touch and Mouse
+            container.addEventListener('mousedown', onPointerStart, { passive: true });
+            window.addEventListener('mousemove', onPointerMove, { passive: true });
+            window.addEventListener('mouseup', onPointerEnd, { passive: true });
+
+            container.addEventListener('touchstart', onPointerStart, { passive: true });
+            window.addEventListener('touchmove', onPointerMove, { passive: true });
+            window.addEventListener('touchend', onPointerEnd, { passive: true });
+
+            // Wheel to Zoom
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                camera.position.z = Math.max(4.2, Math.min(9.5, camera.position.z + e.deltaY * 0.003));
+            }, { passive: false });
+
+            // Auto-Adjust Canvas on Resize using ResizeObserver
+            const resizeObserver = new ResizeObserver((entries) => {
+                for (let entry of entries) {
+                    const cr = entry.contentRect;
+                    if (cr.width > 0 && cr.height > 0) {
+                        camera.aspect = cr.width / cr.height;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(cr.width, cr.height);
+                    }
+                }
+            });
+            resizeObserver.observe(container);
+
+            // Animation Loop with Inertia & Dampening
+            function animateLoop() {
+                requestAnimationFrame(animateLoop);
+
+                if (!isPointerDown) {
+                    // Natural slow rotation & inertia damping
+                    rotationVelocity.x *= 0.94;
+                    rotationVelocity.y *= 0.94;
+                    
+                    sculptureGroup.rotation.y += 0.0025 + rotationVelocity.y;
+                    sculptureGroup.rotation.x += 0.0015 + rotationVelocity.x;
+
+                    // Parallax easing
+                    sculptureGroup.position.x += (targetTilt.y * 0.4 - sculptureGroup.position.x) * 0.05;
+                    sculptureGroup.position.y += (targetTilt.x * 0.4 - sculptureGroup.position.y) * 0.05;
+                } else {
+                    sculptureGroup.rotation.y += rotationVelocity.y;
+                    sculptureGroup.rotation.x += rotationVelocity.x;
+                }
+
+                goldRings.rotation.z += 0.004;
+                dustParticles.rotation.y += 0.0006;
+
+                renderer.render(scene, camera);
+            }
+            animateLoop();
+        }
+
+        // ==========================================
+        // 2. REAL REPO AUTO-DETECTION & SCANNER
+        // ==========================================
+        async function detectAndScanRepository() {
+            const loadingState = document.getElementById('scanLoadingState');
+            const emptyState = document.getElementById('emptyState');
+            const statScan = document.getElementById('statScanStatus');
+            
+            loadingState.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            statScan.textContent = 'SCANNING';
+
+            const config = getRepoOriginConfig();
+            document.getElementById('navRepoLabel').textContent = config.repo ? config.repo.toUpperCase() : 'LOCAL ROOT';
+            document.getElementById('statRepoOwner').textContent = config.repo ? config.repo.split('/')[0].toUpperCase() : 'LOCAL HOST';
+
+            try {
+                if (config.repo) {
+                    // 1. Query GitHub Git Trees API for full recursive repo scan
+                    const apiUrl = `https://api.github.com/repos/${config.repo}/git/trees/${config.branch}?recursive=1`;
+                    const res = await fetch(apiUrl);
+                    
+                    if (!res.ok) throw new Error(`GitHub API returned status ${res.status}`);
+                    const data = await res.json();
+
+                    if (!data.tree || !Array.isArray(data.tree)) throw new Error('Tree format invalid');
+
+                    // Filter only authentic .html files, strictly excluding index.html and 404.html
+                    const htmlTreeNodes = data.tree.filter(node => 
+                        node.type === 'blob' && 
+                        node.path.endsWith('.html') && 
+                        !node.path.toLowerCase().endsWith('index.html') &&
+                        !node.path.toLowerCase().endsWith('404.html')
+                    );
+
+                    if (htmlTreeNodes.length === 0) {
+                        displayEmptyRepoNotice("No additional .html files were discovered in this GitHub repository.");
+                        return;
+                    }
+
+                    // Process genuine files
+                    discoveredPortfolios = htmlTreeNodes.map((node, index) => {
+                        const filename = node.path.split('/').pop();
+                        return {
+                            id: `gh-file-${index}`,
+                            title: formatTitleFromFilename(filename),
+                            filename: node.path,
+                            category: categorizeFile(filename),
+                            size: (node.size ? (node.size / 1024).toFixed(1) + ' KB' : 'Static HTML'),
+                            url: `./${node.path}`,
+                            rawGithubUrl: `https://raw.githubusercontent.com/${config.repo}/${config.branch}/${node.path}`,
+                            tags: ['Verified Repo File', 'Standalone']
+                        };
+                    });
+
+                    // Enrich metadata (titles from <title> tag) asynchronously
+                    enrichPortfolioMetadata(discoveredPortfolios);
+                } else {
+                    // 2. Relative Directory Probe (Fallback if no GitHub Repo specified)
+                    await probeCommonLocalHtmlFiles();
+                }
+
+                loadingState.classList.add('hidden');
+                statScan.textContent = 'ACTIVE';
+                renderPortfolioGrid(discoveredPortfolios);
+
+            } catch (err) {
+                console.warn('Repository scan exception:', err);
+                loadingState.classList.add('hidden');
+                statScan.textContent = 'STANDBY';
+                
+                // If API rate limited or no repo provided, probe local relative links
+                await probeCommonLocalHtmlFiles();
+            }
+        }
+
+        function getRepoOriginConfig() {
+            // Check query param e.g. ?repo=owner/repo
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('repo')) {
+                return { repo: urlParams.get('repo'), branch: urlParams.get('branch') || 'main' };
+            }
+
+            // Check localStorage
+            const saved = localStorage.getItem('archivum_repo_cfg');
+            if (saved) {
+                try { return JSON.parse(saved); } catch(e) {}
+            }
+
+            // Auto-detect if deployed on GitHub Pages (e.g. username.github.io/my-portfolio)
+            const host = window.location.hostname;
+            if (host.endsWith('.github.io')) {
+                const owner = host.replace('.github.io', '');
+                const pathParts = window.location.pathname.split('/').filter(Boolean);
+                const repo = pathParts[0] || '';
+                if (owner && repo) {
+                    return { repo: `${owner}/${repo}`, branch: 'main' };
+                }
+            }
+
+            return { repo: '', branch: 'main' };
+        }
+
+        async function probeCommonLocalHtmlFiles() {
+            // Probing direct relative files if deployed without GitHub API credentials
+            const candidates = [
+                'portfolio-1.html', 'portfolio-2.html', 'portfolio.html', 
+                'works.html', 'showcase.html', 'about.html', 'project.html',
+                'atelier.html', 'editorial.html', 'minimal.html'
+            ];
+
+            const found = [];
+            for (let path of candidates) {
+                try {
+                    const headRes = await fetch(`./${path}`, { method: 'HEAD' });
+                    if (headRes.ok) {
+                        const sizeHeader = headRes.headers.get('content-length');
+                        found.push({
+                            id: `local-probe-${path}`,
+                            title: formatTitleFromFilename(path),
+                            filename: path,
+                            category: categorizeFile(path),
+                            size: sizeHeader ? (parseInt(sizeHeader) / 1024).toFixed(1) + ' KB' : 'HTML Document',
+                            url: `./${path}`,
+                            tags: ['Local File', 'Standalone']
+                        });
+                    }
+                } catch(e) {
+                    // Ignore non-existent probed candidates
+                }
+            }
+
+            discoveredPortfolios = found;
+            if (discoveredPortfolios.length === 0) {
+                displayEmptyRepoNotice("No other HTML portfolio pages detected in the current directory.");
+            } else {
+                renderPortfolioGrid(discoveredPortfolios);
+            }
+        }
+
+        async function enrichPortfolioMetadata(items) {
+            for (let item of items) {
+                try {
+                    const fetchUrl = item.url;
+                    const res = await fetch(fetchUrl);
+                    if (res.ok) {
+                        const text = await res.text();
+                        const doc = new DOMParser().parseFromString(text, 'text/html');
+                        const docTitle = doc.querySelector('title')?.innerText;
+                        const metaDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content');
+                        
+                        if (docTitle && docTitle.trim().length > 0) {
+                            item.title = docTitle.trim();
+                        }
+                        if (metaDesc && metaDesc.trim().length > 0) {
+                            item.description = metaDesc.trim();
+                        }
+                        renderPortfolioGrid(discoveredPortfolios);
+                    }
+                } catch(e) {
+                    // Fallback to filename title
+                }
+            }
+        }
+
+        function displayEmptyRepoNotice(desc) {
+            const emptyState = document.getElementById('emptyState');
+            const grid = document.getElementById('portfolioGrid');
+            const statTotal = document.getElementById('statTotalFiles');
+            
+            grid.innerHTML = '';
+            statTotal.textContent = '0';
+            if (desc) document.getElementById('emptyStateDesc').textContent = desc;
+            emptyState.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // 3. RENDER CATALOGUE ITEMS
+        // ==========================================
+        function renderPortfolioGrid(items) {
+            const grid = document.getElementById('portfolioGrid');
+            const emptyState = document.getElementById('emptyState');
+            const statTotal = document.getElementById('statTotalFiles');
+
+            statTotal.textContent = items.length;
+
+            if (!items || items.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = items.map((item, idx) => {
+                const romanNum = toRoman(idx + 1);
+                return `
+                <div class="bg-white border border-stone-200 card-shadow flex flex-col justify-between group transition-all">
+                    <div>
+                        <!-- Header -->
+                        <div class="p-4 sm:p-5 pb-3 border-b border-stone-100 flex items-center justify-between">
+                            <span class="font-cinzel text-xs text-imperial-gold font-bold tracking-widest">OPUS ${romanNum}</span>
+                            <span class="text-[10px] font-mono uppercase px-2 py-0.5 bg-stone-100 text-stone-600 border border-stone-200/80">${escapeHtml(item.category)}</span>
+                        </div>
+
+                        <!-- Interactive Preview Frame Preview -->
+                        <div class="relative bg-stone-100 h-44 overflow-hidden border-b border-stone-200/80 flex flex-col items-center justify-center p-4 text-center group-hover:bg-marble/40 transition-colors">
+                            <div class="font-cinzel text-2xl sm:text-3xl text-stone-300 font-bold tracking-wider group-hover:text-imperial-lightgold transition-colors">
+                                ${escapeHtml(item.title.substring(0, 3)).toUpperCase()}
+                            </div>
+                            <span class="font-serif italic text-xs text-stone-500 mt-2 line-clamp-1 max-w-[200px]">${escapeHtml(item.filename)}</span>
+
+                            <!-- Hover Overlay -->
+                            <div class="absolute inset-0 bg-stone-900/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2.5 p-4">
+                                <button onclick="openPreviewModal('${item.id}')" class="px-3 py-1.5 bg-white text-stone-900 font-cinzel text-xs tracking-wider hover:bg-imperial-sand transition-colors flex items-center gap-1.5">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5 text-imperial-gold"></i>
+                                    <span>PREVIEW</span>
+                                </button>
+                                <a href="${escapeHtml(item.url)}" target="_blank" class="px-3 py-1.5 bg-stone-900 text-white font-cinzel text-xs tracking-wider hover:bg-stone-800 border border-stone-700 transition-colors flex items-center gap-1.5">
+                                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                    <span>VISIT</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="p-5 sm:p-6 space-y-2.5">
+                            <h3 class="font-cinzel text-base sm:text-lg font-semibold text-stone-900 tracking-tight leading-snug group-hover:text-imperial-gold transition-colors">
+                                ${escapeHtml(item.title)}
+                            </h3>
+                            <p class="font-serif text-stone-600 text-xs sm:text-sm leading-relaxed line-clamp-2">
+                                ${escapeHtml(item.description || `Standalone portfolio document located at ${item.filename}`)}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Actions Bottom Bar -->
+                    <div class="p-4 sm:p-5 pt-3 border-t border-stone-100 flex items-center justify-between bg-stone-50/50">
+                        <span class="text-stone-500 text-[11px] font-mono flex items-center gap-1.5">
+                            <i data-lucide="file-code" class="w-3.5 h-3.5 text-stone-400"></i>
+                            ${escapeHtml(item.size)}
+                        </span>
+
+                        <div class="flex items-center gap-2">
+                            <!-- Download Button -->
+                            <button onclick="downloadPortfolioFile('${item.id}')" title="Download standalone HTML" class="px-3 py-1.5 bg-white border border-stone-300 hover:border-stone-900 text-stone-800 text-xs font-cinzel tracking-wider flex items-center gap-1.5 transition-all">
+                                <i data-lucide="download" class="w-3.5 h-3.5 text-imperial-gold"></i>
+                                <span>DOWNLOAD</span>
+                            </button>
+
+                            <!-- Direct Link Redirect -->
+                            <a href="${escapeHtml(item.url)}" target="_blank" title="Redirect directly to page" class="p-1.5 bg-stone-900 hover:bg-stone-800 text-white transition-colors">
+                                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // ==========================================
+        // 4. DOWNLOAD & PREVIEW ENGINE
+        // ==========================================
+        async function downloadPortfolioFile(id) {
+            const item = discoveredPortfolios.find(p => p.id === id);
+            if (!item) return;
+
+            showToast(`Downloading: ${item.filename}`);
+
+            if (item.rawContent) {
+                const blob = new Blob([item.rawContent], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                triggerDirectDownload(url, item.filename);
+                setTimeout(() => URL.revokeObjectURL(url), 2000);
+                return;
+            }
+
+            try {
+                const downloadTarget = item.rawGithubUrl || item.url;
+                const res = await fetch(downloadTarget);
+                if (!res.ok) throw new Error('File fetch failed');
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                triggerDirectDownload(url, item.filename.split('/').pop());
+                setTimeout(() => URL.revokeObjectURL(url), 2000);
+            } catch (err) {
+                triggerDirectDownload(item.url, item.filename.split('/').pop());
+            }
+        }
+
+        function triggerDirectDownload(url, filename) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function openPreviewModal(id) {
+            const item = discoveredPortfolios.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById('previewModalTitle').textContent = item.title.toUpperCase();
+            document.getElementById('previewModalPath').textContent = item.filename;
+            document.getElementById('previewExternalLink').href = item.url;
+            
+            const downloadBtn = document.getElementById('previewDownloadBtn');
+            downloadBtn.onclick = () => downloadPortfolioFile(item.id);
+
+            const iframe = document.getElementById('previewIframe');
+            if (item.rawContent) {
+                iframe.srcdoc = item.rawContent;
+            } else {
+                iframe.removeAttribute('srcdoc');
+                iframe.src = item.url;
+            }
+
+            document.getElementById('previewModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setPreviewDevice('desktop');
+        }
+
+        function closePreviewModal() {
+            document.getElementById('previewModal').classList.add('hidden');
+            document.getElementById('previewIframe').src = 'about:blank';
+            document.body.style.overflow = 'auto';
+        }
+
+        function setPreviewDevice(device) {
+            const wrapper = document.getElementById('previewFrameWrapper');
+            const btns = ['desktop', 'tablet', 'mobile'];
+            
+            btns.forEach(b => {
+                const btn = document.getElementById('devBtn' + b.charAt(0).toUpperCase() + b.slice(1));
+                if (btn) {
+                    btn.className = (b === device) 
+                        ? 'px-3 py-1 text-xs font-cinzel tracking-wider text-stone-900 bg-white shadow-xs'
+                        : 'px-3 py-1 text-xs font-cinzel tracking-wider text-stone-500 hover:text-stone-900';
+                }
+            });
+
+            if (device === 'mobile') {
+                wrapper.style.maxWidth = '380px';
+                wrapper.style.maxHeight = '700px';
+                wrapper.style.borderRadius = '14px';
+                wrapper.style.border = '8px solid #1C1917';
+            } else if (device === 'tablet') {
+                wrapper.style.maxWidth = '768px';
+                wrapper.style.maxHeight = '90%';
+                wrapper.style.borderRadius = '8px';
+                wrapper.style.border = '6px solid #1C1917';
+            } else {
+                wrapper.style.maxWidth = '100%';
+                wrapper.style.maxHeight = '100%';
+                wrapper.style.borderRadius = '0px';
+                wrapper.style.border = 'none';
+            }
+        }
+
+        // ==========================================
+        // 5. LOCAL FILE UPLOAD & DRAG/DROP
+        // ==========================================
+        function handleManualFileUpload(e) {
+            const files = Array.from(e.target.files);
+            processLocalHtmlFiles(files);
+        }
+
+        function setupDragDrop() {
+            const drop = document.getElementById('dropZone');
+            ['dragenter', 'dragover'].forEach(ev => {
+                drop.addEventListener(ev, (e) => {
+                    e.preventDefault();
+                    drop.classList.add('border-imperial-gold', 'bg-stone-50');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(ev => {
+                drop.addEventListener(ev, (e) => {
+                    e.preventDefault();
+                    drop.classList.remove('border-imperial-gold', 'bg-stone-50');
+                });
+            });
+
+            drop.addEventListener('drop', (e) => {
+                const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.html') || f.name.endsWith('.htm'));
+                if (files.length > 0) {
+                    processLocalHtmlFiles(files);
+                } else {
+                    showToast("Only valid .html files are supported");
+                }
+            });
+        }
+
+        function processLocalHtmlFiles(files) {
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const content = e.target.result;
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(content, 'text/html');
+                    const parsedTitle = doc.querySelector('title')?.innerText || formatTitleFromFilename(file.name);
+                    const parsedDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content') || 'Local standalone HTML document uploaded for testing.';
+
+                    const newEntry = {
+                        id: `local-${Date.now()}-${index}`,
+                        title: parsedTitle,
+                        filename: file.name,
+                        category: categorizeFile(file.name),
+                        size: (file.size / 1024).toFixed(1) + ' KB',
+                        url: '#',
+                        rawContent: content,
+                        description: parsedDesc,
+                        tags: ['Local Upload', 'In-Memory']
+                    };
+
+                    discoveredPortfolios.unshift(newEntry);
+                    renderPortfolioGrid(discoveredPortfolios);
+                };
+                reader.readAsText(file);
+            });
+
+            showToast(`Loaded ${files.length} standalone file(s) into catalogue.`);
+        }
+
+        // ==========================================
+        // 6. GITHUB REPO CONFIG MODAL
+        // ==========================================
+        function openRepoConfigModal() {
+            document.getElementById('repoModal').classList.remove('hidden');
+            const config = getRepoOriginConfig();
+            document.getElementById('cfgRepoInput').value = config.repo || '';
+            document.getElementById('cfgBranchInput').value = config.branch || 'main';
+        }
+
+        function closeRepoConfigModal() {
+            document.getElementById('repoModal').classList.add('hidden');
+        }
+
+        function saveAndSyncRepo() {
+            const repo = document.getElementById('cfgRepoInput').value.trim();
+            const branch = document.getElementById('cfgBranchInput').value.trim() || 'main';
+
+            const config = { repo, branch };
+            localStorage.setItem('archivum_repo_cfg', JSON.stringify(config));
+            closeRepoConfigModal();
+            showToast(repo ? `Syncing with GitHub: ${repo}...` : "Switching to local directory scan...");
+            detectAndScanRepository();
+        }
+
+        function rescanRepository() {
+            showToast("Re-scanning directory tree...");
+            detectAndScanRepository();
+        }
+
+        // ==========================================
+        // 7. SEARCH & CATEGORY FILTERING
+        // ==========================================
+        function filterPortfolios() {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+
+            const filtered = discoveredPortfolios.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(query) ||
+                                      item.filename.toLowerCase().includes(query) ||
+                                      (item.description && item.description.toLowerCase().includes(query));
+                
+                const matchesCat = (category === 'all') || (item.category === category);
+                return matchesSearch && matchesCat;
+            });
+
+            renderPortfolioGrid(filtered);
+        }
+
+        // ==========================================
+        // 8. UTILITIES
+        // ==========================================
+        function formatTitleFromFilename(name) {
+            return name
+                .replace(/\.html$/i, '')
+                .replace(/[-_]/g, ' ')
+                .replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function categorizeFile(name) {
+            const n = name.toLowerCase();
+            if (n.includes('arch') || n.includes('build') || n.includes('spatial')) return 'Architectural';
+            if (n.includes('edit') || n.includes('chronicle') || n.includes('type')) return 'Editorial';
+            if (n.includes('3d') || n.includes('kinetic') || n.includes('webgl')) return 'Interactive';
+            return 'Standard';
+        }
+
+        function toRoman(num) {
+            const lookup = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+            let roman = '';
+            for (let i in lookup) {
+                while (num >= lookup[i]) {
+                    roman += i;
+                    num -= lookup[i];
+                }
+            }
+            return roman || 'I';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3200);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePreviewModal();
+                closeRepoConfigModal();
+            }
+        });
+
+        // Initialize on DOM Ready
+        window.addEventListener('DOMContentLoaded', () => {
+            initThreeEngine();
+            setupDragDrop();
+            detectAndScanRepository();
+        });
+    </script>
+</body>
+</html>
