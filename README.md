@@ -37,8 +37,9 @@
       alt="Deploy with Vercel"
     />
   </a>
-</p></div>---
+</p></div>
 ```markdown
+---
 🏛️ Exemplaris Overview
 
 «ARCHIVUM is a standalone, museum-inspired portfolio repository catalogue engineered for automatic deployment on GitHub and Vercel.
@@ -207,7 +208,9 @@ Preview System
         +
 Distribution Layer
 
-</details>---
+</details>
+```
+---
 
 🗂️ Repository Architecture
 
