@@ -38,7 +38,7 @@
     />
   </a>
 </p></div>---
-
+```markdown
 🏛️ Exemplaris Overview
 
 «ARCHIVUM is a standalone, museum-inspired portfolio repository catalogue engineered for automatic deployment on GitHub and Vercel.
@@ -705,3 +705,4 @@ COLLECTION MMXXVI • OPUS CURATUM
 A living catalogue of digital works.
 
 </div>
+```
