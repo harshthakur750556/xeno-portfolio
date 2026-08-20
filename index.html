@@ -226,7 +226,7 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-12 flex-1 w-full">
 
-        <!-- Hero Section: Editorial Typography & Fluid 3D Celestial Monument -->
+        <!-- Hero Section: Editorial Typography & High-Contrast 3D Celestial Monument -->
         <section class="relative bg-white border border-stone-200/90 p-6 sm:p-10 md:p-12 overflow-hidden shadow-xs">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
                 
@@ -262,9 +262,9 @@
                     </div>
                 </div>
 
-                <!-- Right 3D Canvas: Next-Level Kinetic Alabaster & Celestial Gimbal Monolith -->
+                <!-- Right 3D Canvas: High-Contrast Solid Chiseled Alabaster & Celestial Gimbal Monolith -->
                 <div class="lg:col-span-5 flex flex-col items-center justify-center w-full">
-                    <div id="threejs-container" class="w-full h-72 sm:h-84 md:h-96 relative cursor-grab active:cursor-grabbing select-none rounded-sm bg-gradient-to-b from-stone-50/90 via-white to-stone-100/60 border border-stone-200/70 shadow-inner">
+                    <div id="threejs-container" class="w-full h-72 sm:h-84 md:h-96 relative cursor-grab active:cursor-grabbing select-none rounded-sm bg-gradient-to-b from-stone-100/90 via-stone-50 to-stone-200/50 border border-stone-300/80 shadow-inner">
                         <div id="threeLoading" class="absolute inset-0 flex items-center justify-center text-xs font-cinzel text-stone-400">
                             INITIALIZING KINETIC MONUMENT...
                         </div>
@@ -468,10 +468,10 @@
         const TARGET_REPO = `${REPO_OWNER}/${REPO_NAME}`;
 
         // =========================================================================
-        // 1. REVOLUTIONARY THREE.JS KINETIC ALABASTER & CELESTIAL GIMBAL MONUMENT
+        // 1. HIGH-CONTRAST THREE.JS CHISELED ALABASTER & CELESTIAL GIMBAL MONUMENT
         // =========================================================================
         let scene, camera, renderer, masterGroup, clock;
-        let morphingMonolith, originalPositions;
+        let morphingMonolith, wireframeOverlay, originalPositions;
         let innerGoldCrystal, innerWireCore, astrolabeGimbalGroup;
         let ringEquator, ringMeridian, ringPolar;
         let orbitingSatellites = [], cosmicMotes;
@@ -501,30 +501,30 @@
             renderer.setSize(width, height);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.25;
+            renderer.toneMappingExposure = 1.15;
             renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
 
             if (loadingMsg) loadingMsg.remove();
 
-            // 4-Point High Fashion Editorial Studio Lighting
-            const ambientLight = new THREE.AmbientLight(0xfffefb, 1.9);
+            // 4-Point High Contrast Studio Lighting (Balanced to preserve deep shadows)
+            const ambientLight = new THREE.AmbientLight(0xfffefb, 1.0); // Reduced ambient so shadows define the facets
             scene.add(ambientLight);
 
-            keyLight = new THREE.DirectionalLight(0xffecd2, 2.5);
+            keyLight = new THREE.DirectionalLight(0xffecd2, 2.6);
             keyLight.position.set(6, 8, 7);
             scene.add(keyLight);
 
-            fillLight = new THREE.DirectionalLight(0xf4ebe1, 1.4);
-            fillLight.position.set(-5, -4, -3);
+            // Deep stone fill light for high dimensional contrast
+            fillLight = new THREE.DirectionalLight(0x5c5549, 1.2);
+            fillLight.position.set(-6, -4, -4);
             scene.add(fillLight);
 
-            rimLight = new THREE.DirectionalLight(0xdcebff, 2.0);
-            rimLight.position.set(-6, 6, -5);
+            rimLight = new THREE.DirectionalLight(0xdcebff, 2.2);
+            rimLight.position.set(-5, 6, -5);
             scene.add(rimLight);
 
-            internalHeartLight = new THREE.PointLight(0xC5A880, 2.2, 7);
+            internalHeartLight = new THREE.PointLight(0xC5A880, 2.5, 8);
             internalHeartLight.position.set(0, 0, 0);
             scene.add(internalHeartLight);
 
@@ -533,27 +533,34 @@
             scene.add(masterGroup);
 
             // -------------------------------------------------------------
-            // A. PROCEDURAL MORPHING TRANSLUCENT ALABASTER CORE MONUMENT
+            // A. SOLID, HIGH-CONTRAST CHISELED ALABASTER MONUMENT (100% VISIBLE)
             // -------------------------------------------------------------
-            const monolithGeo = new THREE.IcosahedronGeometry(1.42, 16);
+            const monolithGeo = new THREE.IcosahedronGeometry(1.45, 4); // Geodesic facets with flat shading
             originalPositions = monolithGeo.attributes.position.array.slice();
 
-            const alabasterMarbleMat = new THREE.MeshPhysicalMaterial({
-                color: 0xFAF8F5,
-                roughness: 0.12,
-                metalness: 0.04,
-                clearcoat: 1.0,
-                clearcoatRoughness: 0.08,
-                reflectivity: 0.95,
-                transmission: 0.65, // True frosted optical marble translucency
-                ior: 1.52,
-                thickness: 1.8,
-                specularIntensity: 1.0,
-                specularColor: 0xfff6ec
+            // Solid Carrara Alabaster Stone with rich depth and clear facet definitions
+            const alabasterStoneMat = new THREE.MeshPhysicalMaterial({
+                color: 0xE6E1D8, // Warm marble stone tint for stark contrast on white canvas
+                roughness: 0.3,
+                metalness: 0.08,
+                clearcoat: 0.9,
+                clearcoatRoughness: 0.15,
+                reflectivity: 0.85,
+                flatShading: true // Chiseled architectural flat-shading for sharp dimensional contrast!
             });
 
-            morphingMonolith = new THREE.Mesh(monolithGeo, alabasterMarbleMat);
+            morphingMonolith = new THREE.Mesh(monolithGeo, alabasterStoneMat);
             masterGroup.add(morphingMonolith);
+
+            // Golden Geometric Lattice Overlay to outline the facets
+            const wireMat = new THREE.MeshBasicMaterial({
+                color: 0x8C704B,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.35
+            });
+            wireframeOverlay = new THREE.Mesh(monolithGeo, wireMat);
+            morphingMonolith.add(wireframeOverlay);
 
             // -------------------------------------------------------------
             // B. INNER 24K IMPERIAL GOLD STELLATED NUCLEUS
@@ -561,8 +568,8 @@
             const innerGoldGeo = new THREE.OctahedronGeometry(0.75, 0);
             const goldMat = new THREE.MeshStandardMaterial({
                 color: 0xC5A880,
-                metalness: 0.94,
-                roughness: 0.2,
+                metalness: 0.95,
+                roughness: 0.18,
                 flatShading: true
             });
             innerGoldCrystal = new THREE.Mesh(innerGoldGeo, goldMat);
@@ -570,13 +577,13 @@
 
             // Golden Geodesic Cage
             const wireGeo = new THREE.IcosahedronGeometry(0.95, 1);
-            const wireMat = new THREE.MeshBasicMaterial({
+            const innerWireMat = new THREE.MeshBasicMaterial({
                 color: 0x8C704B,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.35
+                opacity: 0.45
             });
-            innerWireCore = new THREE.Mesh(wireGeo, wireMat);
+            innerWireCore = new THREE.Mesh(wireGeo, innerWireMat);
             masterGroup.add(innerWireCore);
 
             // -------------------------------------------------------------
@@ -587,28 +594,28 @@
 
             const goldRingMat = new THREE.MeshStandardMaterial({
                 color: 0xC5A880,
-                metalness: 0.9,
+                metalness: 0.92,
                 roughness: 0.25
             });
 
             const brushedWireRingMat = new THREE.MeshStandardMaterial({
-                color: 0x8C704B,
-                metalness: 0.8,
+                color: 0x6A5334,
+                metalness: 0.85,
                 roughness: 0.35,
                 wireframe: true
             });
 
             // Ring 1: Equatorial Ring with dial ticks
-            ringEquator = new THREE.Mesh(new THREE.TorusGeometry(2.18, 0.024, 16, 120), goldRingMat);
+            ringEquator = new THREE.Mesh(new THREE.TorusGeometry(2.18, 0.026, 16, 120), goldRingMat);
             astrolabeGimbalGroup.add(ringEquator);
 
             // Ring 2: Meridian Ring
-            ringMeridian = new THREE.Mesh(new THREE.TorusGeometry(2.38, 0.02, 16, 120), brushedWireRingMat);
+            ringMeridian = new THREE.Mesh(new THREE.TorusGeometry(2.38, 0.022, 16, 120), brushedWireRingMat);
             ringMeridian.rotation.x = Math.PI / 2.35;
             astrolabeGimbalGroup.add(ringMeridian);
 
             // Ring 3: Polar Ecliptic Gimbal
-            ringPolar = new THREE.Mesh(new THREE.TorusGeometry(2.58, 0.016, 16, 120), goldRingMat);
+            ringPolar = new THREE.Mesh(new THREE.TorusGeometry(2.58, 0.018, 16, 120), goldRingMat);
             ringPolar.rotation.y = Math.PI / 2.6;
             ringPolar.rotation.z = Math.PI / 3.8;
             astrolabeGimbalGroup.add(ringPolar);
@@ -617,15 +624,15 @@
             // D. ORBITING CELESTIAL SATELLITE CRYSTALS
             // -------------------------------------------------------------
             const satelliteMat = new THREE.MeshStandardMaterial({
-                color: 0xFAF8F5,
-                metalness: 0.15,
-                roughness: 0.2,
-                clearcoat: 0.9
+                color: 0xE8E3DA,
+                metalness: 0.2,
+                roughness: 0.25,
+                flatShading: true
             });
 
             const satCount = 6;
             for (let i = 0; i < satCount; i++) {
-                const satMesh = new THREE.Mesh(new THREE.OctahedronGeometry(0.12, 0), satelliteMat);
+                const satMesh = new THREE.Mesh(new THREE.OctahedronGeometry(0.13, 0), satelliteMat);
                 masterGroup.add(satMesh);
                 orbitingSatellites.push({
                     mesh: satMesh,
@@ -652,7 +659,7 @@
                 size: 0.042,
                 color: 0x8C704B,
                 transparent: true,
-                opacity: 0.65
+                opacity: 0.7
             });
             cosmicMotes = new THREE.Points(moteGeo, moteMat);
             scene.add(cosmicMotes);
@@ -725,17 +732,16 @@
 
                 const time = clock.getElapsedTime();
 
-                // 1. Organic Marble Fluid Morphing on Monolith Core
+                // 1. Organic Kinetic Morphing on the Solid Alabaster Monolith
                 const pos = morphingMonolith.geometry.attributes.position.array;
                 for (let i = 0; i < pos.length; i += 3) {
                     const u = originalPositions[i];
                     const v = originalPositions[i + 1];
                     const w = originalPositions[i + 2];
                     
-                    // Harmonic wave distortion
-                    const wave = Math.sin(u * 2.4 + time * 1.3) * 
-                                 Math.cos(v * 2.4 + time * 1.1) * 
-                                 Math.sin(w * 2.4 + time * 1.4) * 0.12;
+                    const wave = Math.sin(u * 2.2 + time * 1.3) * 
+                                 Math.cos(v * 2.2 + time * 1.1) * 
+                                 Math.sin(w * 2.2 + time * 1.4) * 0.11;
 
                     pos[i] = u + u * wave;
                     pos[i + 1] = v + v * wave;
