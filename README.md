@@ -1,4 +1,4 @@
-```markdown
+
 <div align="center"><p align="center">
   <img
     src="https://capsule-render.vercel.app/api?type=waving&color=1C1917&height=220&section=header&text=ARCHIVUM&fontSize=65&fontAlignY=40&desc=Autonomous%20Portfolio%20Catalogue%20%26%20Directory&descFontSize=16&descAlignY=62&fontColor=C5A880&stroke=8C704B&strokeWidth=1"
@@ -705,4 +705,3 @@ COLLECTION MMXXVI • OPUS CURATUM
 A living catalogue of digital works.
 
 </div>
-```
