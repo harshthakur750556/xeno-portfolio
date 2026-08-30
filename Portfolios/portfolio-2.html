@@ -203,8 +203,10 @@ header.scrolled{background:rgba(242,239,232,.78);backdrop-filter:blur(18px);-web
 #menu a span{font-family:var(--f-mono);font-size:.62rem;color:var(--gold);letter-spacing:.2em}
 #menu a em{font-style:italic;font-weight:300;font-size:.55em;color:var(--muted);margin-left:auto}
 #menu a:hover{color:var(--gold);padding-left:.8rem}
-.menu-foot{display:flex;gap:1.6rem;margin-top:2.6rem;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.2em;color:var(--muted)}
-.menu-foot a:hover{color:var(--gold)}
+.menu-foot{display:flex;gap:1.7rem;margin-top:2.6rem;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.2em;color:var(--muted);flex-wrap:wrap}
+.menu-foot a{display:inline-flex;align-items:center;gap:.55rem;transition:color .3s,transform .35s var(--ease)}
+.menu-foot a svg{width:16px;height:16px;fill:currentColor}
+.menu-foot a:hover{color:var(--gold);transform:translateY(-2px)}
 
 /* ── hero ─────────────────────────────────────── */
 .hero{
@@ -523,14 +525,27 @@ html.js .contact-title.go .cw{transition:transform 1s var(--ease);transition-del
 .mail:hover::after{transform:scaleX(1);transform-origin:0 50%}
 .mail .arr{color:var(--gold);transition:transform .4s var(--ease)}
 .mail:hover .arr{transform:translate(4px,-4px)}
-.socials{display:flex;justify-content:center;gap:clamp(1.2rem,3.4vw,2.8rem);margin-top:3rem;flex-wrap:wrap}
+.socials{display:flex;justify-content:center;gap:clamp(1rem,2.6vw,1.7rem);margin-top:3.4rem;flex-wrap:wrap}
 .socials a{
-  font-family:var(--f-mono);font-size:.64rem;letter-spacing:.26em;color:var(--muted);
-  text-transform:uppercase;position:relative;padding:.4rem 0;transition:color .3s;
+  position:relative;width:clamp(58px,6.8vw,72px);aspect-ratio:1;border-radius:50%;
+  display:grid;place-items:center;border:1px solid var(--line-2);background:var(--paper);
+  color:var(--ink);isolation:isolate;
+  transition:background .4s var(--ease),color .4s var(--ease),border-color .4s,
+             transform .45s var(--ease),box-shadow .45s var(--ease);
 }
-.socials a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:100% 50%;transition:transform .45s var(--ease)}
-.socials a:hover{color:var(--ink)}
-.socials a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.socials a svg{width:38%;height:38%;fill:currentColor;transition:transform .45s var(--ease)}
+.socials a .s-label{
+  position:absolute;top:calc(100% + .85rem);left:50%;transform:translateX(-50%) scale(.8);
+  font-family:var(--f-mono);font-size:.52rem;letter-spacing:.24em;color:var(--muted);
+  text-transform:uppercase;opacity:0;pointer-events:none;white-space:nowrap;
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.socials a:hover{transform:translateY(-6px)}
+.socials a:hover svg{transform:scale(1.12) rotate(-6deg)}
+.socials a:hover .s-label{opacity:1;transform:translateX(-50%) scale(1)}
+.socials a.gh:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);box-shadow:0 20px 38px -16px rgba(23,21,18,.55)}
+.socials a.dc:hover{background:var(--clay);border-color:var(--clay);color:#fff;box-shadow:0 20px 38px -16px rgba(217,108,61,.6)}
+.socials a.ml:hover{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 20px 38px -16px rgba(192,138,46,.6)}
 
 footer{border-top:1px solid var(--line);padding:1.9rem 0 2.2rem}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap;font-family:var(--f-mono);font-size:.58rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
@@ -618,9 +633,9 @@ footer{border-top:1px solid var(--line);padding:1.9rem 0 2.2rem}
   <a href="#about"><span>04</span>About<em>the designer</em></a>
   <a href="#contact"><span>05</span>Contact<em>say hello</em></a>
   <div class="menu-foot">
-    <a href="https://github.com/harshthakur750556" target="_blank" rel="noopener">github ↗</a>
-    <a href="https://discord.com/users/1508113317451923536" target="_blank" rel="noopener">discord ↗</a>
-    <a href="mailto:hello@sol.design">mail ↗</a>
+    <a href="https://github.com/harshthakur750556" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>github</a>
+    <a href="https://discord.com/users/1508113317451923536" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.291.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>discord</a>
+    <a href="mailto:hello@sol.design"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m0 4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7.613 5.396a4 4 0 0 0 4.774 0L21 4.217V4a1 1 0 0 0-1-1zm1.539 3.474L2 5.803V20a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5.803l-1.539 1.671a6 6 0 0 1-7.163 0L12 6.474l-1.298 1a6 6 0 0 1-7.163 0"/></svg>mail</a>
   </div>
 </nav>
 
@@ -867,9 +882,18 @@ footer{border-top:1px solid var(--line);padding:1.9rem 0 2.2rem}
       <!-- ✎ replace with your real email -->
       <a class="mail reveal" data-delay="2" href="mailto:hello@sol.design" data-cursor="COPY">hello@sol.design <span class="arr">↗</span></a>
       <div class="socials reveal" data-delay="3">
-        <a href="https://github.com/harshthakur750556" target="_blank" rel="noopener">GitHub ↗</a>
-        <a href="https://discord.com/users/1508113317451923536" target="_blank" rel="noopener">Discord ↗</a>
-        <a href="mailto:hello@sol.design">Mail ↗</a>
+        <a class="gh" href="https://github.com/harshthakur750556" target="_blank" rel="noopener" aria-label="GitHub — Harsh Thakur" title="GitHub" data-cursor="OPEN">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span class="s-label">GitHub</span>
+        </a>
+        <a class="dc" href="https://discord.com/users/1508113317451923536" target="_blank" rel="noopener" aria-label="Discord — harsh750556" title="Discord" data-cursor="OPEN">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.291.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          <span class="s-label">Discord</span>
+        </a>
+        <a class="ml" href="mailto:hello@sol.design" aria-label="Email — hello@sol.design" title="Email" data-cursor="OPEN">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m0 4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7.613 5.396a4 4 0 0 0 4.774 0L21 4.217V4a1 1 0 0 0-1-1zm1.539 3.474L2 5.803V20a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5.803l-1.539 1.671a6 6 0 0 1-7.163 0L12 6.474l-1.298 1a6 6 0 0 1-7.163 0"/></svg>
+          <span class="s-label">Email</span>
+        </a>
       </div>
     </div>
   </section>
